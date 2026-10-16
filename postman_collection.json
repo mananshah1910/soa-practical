@@ -1,0 +1,185 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "SOA Practical - Centralized API Gateway Routing",
+    "description": "Postman Collection to test path-based routing through the Centralized API Gateway for Inventory and Shipping microservices.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "GATEWAY_URL",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Gateway - Catalog & Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{GATEWAY_URL}}/",
+          "host": ["{{GATEWAY_URL}}"],
+          "path": [""]
+        },
+        "description": "Fetch gateway metadata and routing directory"
+      }
+    },
+    {
+      "name": "Inventory - Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{GATEWAY_URL}}/inventory",
+          "host": ["{{GATEWAY_URL}}"],
+          "path": ["inventory"]
+        },
+        "description": "Verify gateway routes /inventory to Inventory Microservice"
+      }
+    },
+    {
+      "name": "Inventory - Get All Items",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{GATEWAY_URL}}/inventory/items",
+          "host": ["{{GATEWAY_URL}}"],
+          "path": ["inventory", "items"]
+        },
+        "description": "Fetches product catalog through API Gateway"
+      }
+    },
+    {
+      "name": "Inventory - Get Item by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{GATEWAY_URL}}/inventory/items/102",
+          "host": ["{{GATEWAY_URL}}"],
+          "path": ["inventory", "items", "102"]
+        },
+        "description": "Fetches a specific product by ID through API Gateway"
+      }
+    },
+    {
+      "name": "Inventory - Add New Item",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Wireless Gaming Mouse Pro\",\n  \"sku\": \"TECH-108\",\n  \"stock\": 50,\n  \"price\": 59.99\n}"
+        },
+        "url": {
+          "raw": "{{GATEWAY_URL}}/inventory/items",
+          "host": ["{{GATEWAY_URL}}"],
+          "path": ["inventory", "items"]
+        },
+        "description": "Adds a new product through API Gateway"
+      }
+    },
+    {
+      "name": "Shipping - Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{GATEWAY_URL}}/shipping",
+          "host": ["{{GATEWAY_URL}}"],
+          "path": ["shipping"]
+        },
+        "description": "Verify gateway routes /shipping to Shipping Microservice"
+      }
+    },
+    {
+      "name": "Shipping - Get All Orders",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{GATEWAY_URL}}/shipping/orders",
+          "host": ["{{GATEWAY_URL}}"],
+          "path": ["shipping", "orders"]
+        },
+        "description": "Fetches all active shipments through API Gateway"
+      }
+    },
+    {
+      "name": "Shipping - Track Shipment",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{GATEWAY_URL}}/shipping/track/TRK-987654",
+          "host": ["{{GATEWAY_URL}}"],
+          "path": ["shipping", "track", "TRK-987654"]
+        },
+        "description": "Tracks shipment by tracking number through API Gateway"
+      }
+    },
+    {
+      "name": "Shipping - Create Shipment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"orderId\": \"ORD-7701\",\n  \"carrier\": \"FedEx Express\",\n  \"destination\": \"San Francisco, CA\"\n}"
+        },
+        "url": {
+          "raw": "{{GATEWAY_URL}}/shipping/create",
+          "host": ["{{GATEWAY_URL}}"],
+          "path": ["shipping", "create"]
+        },
+        "description": "Creates a new shipment through API Gateway"
+      }
+    },
+    {
+      "name": "Gateway - 404 Route Not Found",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{GATEWAY_URL}}/unmapped-service",
+          "host": ["{{GATEWAY_URL}}"],
+          "path": ["unmapped-service"]
+        },
+        "description": "Verifies 404 handling on unconfigured routes"
+      }
+    }
+  ]
+}

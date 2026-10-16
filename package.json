@@ -1,0 +1,28 @@
+{
+  "name": "soa-api-gateway-routing",
+  "version": "1.0.0",
+  "description": "Centralized API Gateway Routing for Inventory and Shipping Microservices",
+  "main": "gateway.js",
+  "scripts": {
+    "start": "node start-all.js",
+    "start:gateway": "node gateway.js",
+    "start:inventory": "node services/inventory-service.js",
+    "start:shipping": "node services/shipping-service.js",
+    "test": "node test-routing.js"
+  },
+  "keywords": [
+    "soa",
+    "api-gateway",
+    "microservices",
+    "routing",
+    "inventory-service",
+    "shipping-service"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.3.0",
+    "http-proxy-middleware": "^4.2.0",
+    "morgan": "^1.12.1"
+  }
+}
